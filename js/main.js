@@ -52,21 +52,21 @@ document.addEventListener("DOMContentLoaded", () => {
         pieTarjeta.className =
           "card-footer d-flex justify-content-center align-items-center gap-2";
 
-        const input = document.createElement("input");
-        input.name = "contador";
-        input.type = "text";
-        input.className = "form-control text-center";
-        input.style.width = "40px";
-        input.disabled = "true";
-        input.value = 1;
+        const inputCantidad = document.createElement("input");
+        inputCantidad.name = "contador";
+        inputCantidad.type = "text";
+        inputCantidad.className = "form-control text-center";
+        inputCantidad.style.width = "40px";
+        inputCantidad.disabled = "true";
+        inputCantidad.value = 1;
 
         //btnMenos
         const btnMenos = document.createElement("button");
         btnMenos.addEventListener("click", (e) => {
           e.preventDefault();
-          let valor = parseInt(input.value, 10);
+          let valor = parseInt(inputCantidad.value, 10);
           if (valor > 1) {
-            input.value = valor - 1;
+            inputCantidad.value = valor - 1;
           }
         });
         btnMenos.className = "btn btn-primary botones";
@@ -76,8 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const btnMas = document.createElement("button");
         btnMas.addEventListener("click", (e) => {
           e.preventDefault();
-          let valor = parseInt(input.value, 10);
-          input.value = valor + 1;
+          let valor = parseInt(inputCantidad.value, 10);
+          inputCantidad.value = valor + 1;
         });
         btnMas.className = "btn btn-primary botones";
         btnMas.textContent = "+";
@@ -88,19 +88,19 @@ document.addEventListener("DOMContentLoaded", () => {
           e.preventDefault();
           let agregarProducto = {
             id: producto.id,
-            cantidad: input.value,
+            cantidad: inputCantidad.value,
           };
           //producto recuperado
-          let recuperarProductos = localStorage.getItem(
+          let listaProductosCarrito = localStorage.getItem(
             "listaProductosCarrito"
           );
-          if (recuperarProductos === null) {
-            recuperarProductos = [];
+          if (listaProductosCarrito === null) {
+            listaProductosCarrito = [];
           } else {
-            recuperarProductos = JSON.parse(recuperarProductos);
+            listaProductosCarrito = JSON.parse(listaProductosCarrito);
           }
-          recuperarProductos.push(agregarProducto);
-          let listaProductosAlmacenados = JSON.stringify(recuperarProductos);
+          listaProductosCarrito.push(agregarProducto);
+          let listaProductosAlmacenados = JSON.stringify(listaProductosCarrito);
           localStorage.setItem(
             "listaProductosCarrito",
             listaProductosAlmacenados
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnAgregar.textContent = "Agregar";
 
         pieTarjeta.appendChild(btnMenos);
-        pieTarjeta.appendChild(input);
+        pieTarjeta.appendChild(inputCantidad);
         pieTarjeta.appendChild(btnMas);
         pieTarjeta.appendChild(btnAgregar);
 
