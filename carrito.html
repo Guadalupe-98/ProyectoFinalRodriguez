@@ -12,6 +12,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <script src="js/carrito.js"></script>
   </head>
 
@@ -20,7 +21,7 @@
   <!-- navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">PROYECTOFINAL</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -37,12 +38,8 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="/index.html">Inicio</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-          
           </ul>
           <form class="d-flex" role="search">
             <input
@@ -61,7 +58,8 @@
 
     <!-- listado de productos-->
 
-    <div class="container grillaCarrito"">
+    <div class="bodys container text-center">
+    <div class="grillaCarrito"">
     <table class="table table-striped-columns">
         <thead>
           <tr>
@@ -70,12 +68,44 @@
             <th scope="col">Modelo</th>
             <th scope="col">Cantidad</th>
             <th scope="col">Precio</th>
+            <th scope="col"></th>
             
           </tr>
         </thead>
         <tbody id="objetosTabla"></tbody>
       </table>
+    
+
+       <!-- Formulario -->
+
+       <form class="formulario">
+
+       <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="nombreInput" placeholder="Nombre">
+        <label for="nombreInput">Nombre</label>
       </div>
+
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="apellidoInput" placeholder="Apellido">
+        <label for="apellidoInput">Apellido</label>
+      </div>
+      
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="direccionInput" placeholder="Direccion">
+        <label for="direccionInput">Direccion</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="emailInput" placeholder="Email">
+        <label for="emailInput">Email</label>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Confirmar Compra</button>
+    </form>
+
+      </div>
+    </div>
+
+     
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
