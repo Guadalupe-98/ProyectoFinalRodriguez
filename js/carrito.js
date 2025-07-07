@@ -13,7 +13,7 @@ const cargarGrilla = () => {
   }
 
   const objetosTabla = document.getElementById("objetosTabla");
-  objetosTabla.innerHTML="";
+  objetosTabla.innerHTML = "";
 
   let sumaTotal = 0;
 
@@ -54,12 +54,33 @@ const cargarGrilla = () => {
       const index = listaProductosCarrito.findIndex(
         (producto) => producto.id === productoCarrito.id
       );
-      if (index !== -1) {
-        listaProductosCarrito.splice(index, 1);
-      }
-      let listaProductosAlmacenados = JSON.stringify(listaProductosCarrito);
-      localStorage.setItem("listaProductosCarrito", listaProductosAlmacenados);
-      cargarGrilla();
+      Swal.fire({
+        title: "Estas seguro?",
+        text: "No se podra revertir!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (index !== -1) {
+            listaProductosCarrito.splice(index, 1);
+          }
+          let listaProductosAlmacenados = JSON.stringify(listaProductosCarrito);
+          localStorage.setItem(
+            "listaProductosCarrito",
+            listaProductosAlmacenados
+          );
+          Swal.fire({
+            title: "Eliminado!",
+            text: "Tu producto se elimino del Carrito.",
+            icon: "success",
+          });
+          cargarGrilla();
+        }
+      });
     });
 
     fila.appendChild(articulo);
@@ -84,6 +105,46 @@ const cargarGrilla = () => {
 
   total.textContent = sumaTotal;
   cantidad.textContent = "total";
+
+  let btnConfirmar = document.getElementById("btnConfirmar");
+  btnConfirmar.addEventListener("click", (e) => {
+    e.preventDefault();
+    let nombre = document.getElementById("nombreInput").value;
+    let apellido = document.getElementById("apellidoInput").value;
+    let direccion = document.getElementById("direccionInput").value;
+    let email = document.getElementById("emailInput").value;
+    if (!nombre || !apellido || !direccion || !email) {
+      Swal.fire({
+        icon: "warning",
+        title: "Faltan datos",
+        text: "Por favor completá todos los campos.",
+      });
+      return;
+    }
+    let listaProductosCarrito = localStorage.getItem("listaProductosCarrito");
+    if (listaProductosCarrito === null) {
+      listaProductosCarrito = [];
+    } else {
+      listaProductosCarrito = JSON.parse(listaProductosCarrito);
+    }
+    if (listaProductosCarrito.length === 0) {
+      Swal.fire({
+        icon: "info",
+        title: "Carrito vacío",
+        text: "Agregá productos al carrito antes de confirmar.",
+      });
+      return;
+    }
+    Swal.fire({
+      icon: "success",
+      title: "Compra Confirmada",
+      html: `
+        <p>Gracias, <b>${nombre} ${apellido}</b>!</p>
+        <p>Dirección: ${direccion}</p>
+        <p>Total a pagar: <b>$${sumaTotal.toFixed(2)}</b></p>
+      `,
+    });
+  });
 
   filaTotal.appendChild(articulo);
   filaTotal.appendChild(modelo);

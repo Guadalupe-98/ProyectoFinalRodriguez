@@ -13,12 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
       productos.forEach((producto) => {
         // Creamos el div.col
         const columna = document.createElement("div");
-        columna.className = "col-md-3 mb-3";
+        columna.className = "col-md-4 mb-4";
 
         // Creamos la tarjeta
         const tarjeta = document.createElement("div");
-        tarjeta.className = "card h-100";
-        tarjeta.style.width = "15rem";
+        tarjeta.className = "card h-60";
+        tarjeta.style.width = "18rem";
         tarjeta.id = producto.id;
 
         // Imagen
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inputCantidad.className = "form-control text-center";
         inputCantidad.style.width = "40px";
         inputCantidad.disabled = "true";
-        inputCantidad.value = 1;
+        inputCantidad.value = 0;
 
         //btnMenos
         const btnMenos = document.createElement("button");
@@ -77,8 +77,17 @@ document.addEventListener("DOMContentLoaded", () => {
         btnMas.addEventListener("click", (e) => {
           e.preventDefault();
           let valor = parseInt(inputCantidad.value, 10);
+          if (valor >= 5) {
+            Swal.fire({
+              title: 'No puedes agregar mas de 5 productos',
+              icon: "error",
+              confirmButtonText: 'Aceptar'
+            });
+            return;
+          };
           inputCantidad.value = valor + 1;
         });
+        
         btnMas.className = "btn btn-primary botones";
         btnMas.textContent = "+";
 
@@ -86,6 +95,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const btnAgregar = document.createElement("button");
         btnAgregar.addEventListener("click", (e) => {
           e.preventDefault();
+          let valor = parseInt(inputCantidad.value, 10);
+          if(valor==0){
+            Swal.fire({
+            title: 'Tenes que seleccionar un producto',
+            icon: "error",
+            confirmButtonText: 'Aceptar'
+          });
+        return;}
           let agregarProducto = {
             id: producto.id,
             cantidad: inputCantidad.value,
@@ -105,6 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
             "listaProductosCarrito",
             listaProductosAlmacenados
           );
+          Swal.fire({
+            title: 'Agregado al Carrito!',
+            icon: "success",
+            confirmButtonText: 'Aceptar'
+          })
         });
         btnAgregar.className = "btn btn-success";
         btnAgregar.textContent = "Agregar";
